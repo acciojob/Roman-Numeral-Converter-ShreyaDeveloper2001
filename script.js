@@ -10,6 +10,29 @@ function convertToRoman(num) {
     };
 
   //your code here
+	let romanNumeral = '';
+
+  for (let i = 0; i < 7; i++) {
+    const [symbol, value] = obj[i];
+    const count = Math.floor(num / value);
+    num %= value;
+    
+    if (count > 0) {
+      romanNumeral += symbol.repeat(count);
+    }
+
+    // Handle subtractive notation (e.g., IV for 4, IX for 9, etc.)
+    if (i % 2 === 0 && i < 6) {
+      const nextValue = obj[i + 2][1];
+      const subtractiveSymbol = obj[i + 2][0];
+      if (num >= value - nextValue) {
+        romanNumeral += subtractiveSymbol + symbol;
+        num -= value - nextValue;
+      }
+	}
+  }
+
+  return romanNumeral;
 
 }
 // You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
